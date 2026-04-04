@@ -1,0 +1,58 @@
+import type { Project } from '../types';
+
+export const projects: Project[] = [
+  {
+    id: 'afp-query',
+    title: 'AFP Query Service',
+    description: 'Cloud-migrated query service for Lincoln Financial handling annuity fund performance data with serverless AWS Lambda architecture.',
+    thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+    techStack: ['Node.js', 'AWS Lambda', 'DynamoDB'],
+    demoUrl: undefined,
+    repoUrl: undefined,
+  },
+  {
+    id: 'fund-modelling',
+    title: 'Fund Modelling Service',
+    description: 'Microservice for financial fund modelling and calculations, migrated from on-premise to AWS ECS with Spring Boot.',
+    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
+    techStack: ['Java', 'Spring Boot', 'AWS ECS'],
+    demoUrl: undefined,
+    repoUrl: undefined,
+  },
+  {
+    id: 'ria-onboarding',
+    title: 'RIA Onboarding',
+    description: 'Registered Investment Advisor onboarding platform with multi-step workflows, document management and compliance checks.',
+    thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop',
+    techStack: ['React', 'Node.js', 'PostgreSQL'],
+    demoUrl: undefined,
+    repoUrl: undefined,
+  },
+  {
+    id: 'rmd-calculator',
+    title: 'RMD Calculator Service',
+    description: 'Required Minimum Distribution calculator for retirement accounts with complex financial logic and real-time computations.',
+    thumbnail: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&h=400&fit=crop',
+    techStack: ['Node.js', 'AWS Lambda', 'REST API'],
+    demoUrl: undefined,
+    repoUrl: undefined,
+  },
+  {
+    id: 'annuity-common',
+    title: 'Annuity Common Service',
+    description: 'Shared microservice layer for annuity products providing common business logic, data access and integration patterns.',
+    thumbnail: 'https://images.unsplash.com/photo-1563986768609-322da13575f2?w=600&h=400&fit=crop',
+    techStack: ['Java', 'Spring Boot', 'AWS'],
+    demoUrl: undefined,
+    repoUrl: undefined,
+  },
+  {
+    id: 'bank-advisory',
+    title: 'Bank Advisory Platform',
+    description: 'Banking advisory system for Bank Yahav with interactive UI, stored procedures, and comprehensive reporting capabilities.',
+    thumbnail: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop',
+    techStack: ['Java', 'Oracle SQL', 'JavaScript'],
+    demoUrl: undefined,
+    repoUrl: undefined,
+  },
+];
