@@ -9,10 +9,6 @@ export function validateEmail(email: string): boolean {
 export function validateContactForm(data: ContactFormData): ContactFormErrors {
   const errors: ContactFormErrors = {};
 
-  if (!data.name.trim()) {
-    errors.name = 'This field is required';
-  }
-
   if (!data.email.trim()) {
     errors.email = 'This field is required';
   } else if (!validateEmail(data.email)) {

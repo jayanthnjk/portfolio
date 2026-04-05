@@ -59,14 +59,15 @@ export function useContactForm() {
     setIsSending(true);
 
     const intentLabel = INTENT_LABELS[formData.intent] || 'General';
-    const message = (INTENT_MESSAGES[formData.intent] || INTENT_MESSAGES.general)(formData.name, formData.email);
+    const displayName = formData.name.trim() || formData.email.split('@')[0];
+    const message = (INTENT_MESSAGES[formData.intent] || INTENT_MESSAGES.general)(displayName, formData.email);
 
     try {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
-          from_name: formData.name,
+          from_name: displayName,
           from_email: formData.email,
           intent: intentLabel,
           message: message,
