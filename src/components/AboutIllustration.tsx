@@ -53,23 +53,26 @@ export function AboutIllustration() {
   }, [inView]);
 
   return (
-    <div ref={ref} className="w-full overflow-hidden">
+    <div ref={ref} className="w-full min-w-0 overflow-hidden">
       {LAYERS.map((layer, i) => {
         const isOpen = expanded === i;
         const reached = step >= i;
 
         return (
-          <div key={layer.label} className="flex gap-2 sm:gap-3">
+          <div key={layer.label} className="flex gap-2.5 min-w-0">
             {/* Timeline */}
-            <div className="flex flex-col items-center shrink-0 w-4 sm:w-5">
-              <motion.div className="w-2 h-2 rounded-full shrink-0 z-10"
-                style={{ background: reached ? layer.color : '#2d2d50', boxShadow: reached ? `0 0 6px ${layer.color}40` : 'none' }}
+            <div className="flex flex-col items-center shrink-0 w-5">
+              <motion.div className="w-2.5 h-2.5 rounded-full shrink-0 z-10"
+                style={{
+                  background: reached ? layer.color : '#2d2d50',
+                  boxShadow: reached ? `0 0 10px ${layer.color}60, 0 0 20px ${layer.color}20` : 'none',
+                }}
                 animate={reached ? { scale: [0, 1.3, 1] } : {}}
                 transition={{ duration: 0.4 }} />
               {i < LAYERS.length - 1 && (
-                <div className="w-px flex-1 relative" style={{ background: '#1e1e3820' }}>
+                <div className="w-[2px] flex-1 relative rounded-full" style={{ background: '#1e1e3815' }}>
                   <motion.div className="absolute inset-x-0 top-0 rounded-full"
-                    style={{ background: layer.color }}
+                    style={{ background: `linear-gradient(to bottom, ${layer.color}, ${LAYERS[i + 1].color})` }}
                     animate={step > i ? { height: '100%' } : { height: '0%' }}
                     transition={{ duration: 0.4, delay: 0.1 }} />
                 </div>
@@ -78,24 +81,25 @@ export function AboutIllustration() {
 
             {/* Card */}
             <motion.div
-              className="flex-1 min-w-0 mb-1.5 rounded-lg overflow-hidden cursor-pointer"
+              className="flex-1 min-w-0 mb-1 rounded-xl overflow-hidden cursor-pointer"
               style={{
-                background: reached ? '#1a1a2e' : '#14142a',
-                border: `1px solid ${isOpen ? layer.color + '30' : reached ? '#ffffff08' : '#ffffff04'}`,
+                background: reached ? 'linear-gradient(135deg, #1e1e38 0%, #1a1a2e 100%)' : '#14142a',
+                border: `1px solid ${isOpen ? layer.color + '40' : reached ? '#ffffff0a' : '#ffffff04'}`,
+                boxShadow: isOpen ? `0 4px 20px ${layer.color}15` : reached ? '0 2px 8px rgba(0,0,0,0.15)' : 'none',
               }}
               onClick={() => setExpanded(isOpen ? null : i)}
               animate={reached ? { opacity: 1, x: 0 } : { opacity: 0.2, x: 8 }}
               transition={{ duration: 0.4 }}
               layout
             >
-              <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 sm:py-4">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shrink-0"
-                  style={{ background: `${layer.color}12`, color: layer.color }}>
+              <div className="flex items-center gap-2.5 px-3 py-2.5">
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                  style={{ background: `${layer.color}18`, color: layer.color }}>
                   {ICONS[i]}
                 </div>
-                <div className="flex-1 min-w-0 overflow-hidden">
-                  <p className="text-white text-sm sm:text-base font-bold truncate">{layer.label}</p>
-                  <p className="text-gray-500 text-xs sm:text-sm truncate">{layer.sub}</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-white text-sm font-bold truncate">{layer.label}</p>
+                  <p className="text-gray-500 text-[11px] truncate">{layer.sub}</p>
                 </div>
                 <motion.svg viewBox="0 0 20 20" fill={reached ? layer.color : '#333'} className="w-3.5 h-3.5 shrink-0"
                   animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
@@ -108,12 +112,12 @@ export function AboutIllustration() {
                   <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }}
                     className="overflow-hidden">
-                    <div className="px-3 sm:px-4 pb-3 sm:pb-4" style={{ borderTop: `1px solid ${layer.color}10` }}>
-                      <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mt-2 mb-2">{layer.desc}</p>
+                    <div className="px-3 pb-3" style={{ borderTop: `1px solid ${layer.color}15` }}>
+                      <p className="text-gray-400 text-xs leading-relaxed mt-2 mb-2">{layer.desc}</p>
                       <div className="flex flex-wrap gap-1.5">
                         {layer.tags.map((tag, ti) => (
-                          <motion.span key={tag} className="text-xs font-semibold px-2.5 py-1 rounded"
-                            style={{ background: `${layer.color}10`, color: layer.color }}
+                          <motion.span key={tag} className="text-[11px] font-semibold px-2 py-0.5 rounded-md"
+                            style={{ background: `${layer.color}15`, color: layer.color }}
                             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                             transition={{ delay: ti * 0.03 }}>
                             {tag}

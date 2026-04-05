@@ -104,7 +104,7 @@ export function SkillsSection() {
   }, [expanded]);
 
   return (
-    <section id="skills" className="py-16 sm:py-28 px-4 sm:px-6 bg-dark-900 relative overflow-hidden">
+    <section id="skills" className="py-16 sm:py-28 px-5 sm:px-6 bg-dark-900 relative overflow-hidden">
       {/* Ambient blurs */}
       <div className="absolute top-[-200px] right-[-100px] w-[600px] h-[600px] bg-coral-500/[0.04] rounded-full blur-[120px]" />
       <div className="absolute bottom-[-150px] left-[-80px] w-[500px] h-[500px] bg-blue-500/[0.03] rounded-full blur-[100px]" />

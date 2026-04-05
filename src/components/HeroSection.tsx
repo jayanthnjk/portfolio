@@ -18,7 +18,7 @@ export function HeroSection() {
       <div className="absolute inset-0 opacity-[0.03]" aria-hidden="true"
         style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '50px 50px' }} />
 
-      <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-5 sm:px-6">
         <motion.div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center pt-20 pb-12 sm:pt-24 sm:pb-20 lg:pt-28 lg:pb-28 min-h-[85vh] sm:min-h-screen"
           variants={cV} initial={r ? undefined : 'hidden'} animate={r ? undefined : 'visible'}>
 

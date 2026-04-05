@@ -305,7 +305,7 @@ function MobileTimeline() {
 export function ExperienceSection() {
   return (
     <>
-      <section id="experience" className="py-16 sm:py-28 px-4 sm:px-6 bg-dark-900 overflow-hidden">
+      <section id="experience" className="py-16 sm:py-28 px-5 sm:px-6 bg-dark-900 overflow-hidden">
         <div className="max-w-[1100px] mx-auto">
           <AnimatedSection variant="fadeUp">
             <div className="text-center mb-20">

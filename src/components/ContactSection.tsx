@@ -37,19 +37,19 @@ export default function ContactSection() {
     <section ref={ref} id="contact" className="relative bg-gray-50 overflow-hidden">
       {/* Floating gradient orbs */}
       <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full blur-[150px]"
+        className="absolute w-[500px] h-[500px] rounded-full blur-[150px] max-w-[100vw]"
         style={{ background: 'radial-gradient(circle, rgba(255,107,74,0.05), transparent 70%)', top: '-10%', right: '-5%' }}
         animate={inView ? { x: [0, 30, 0], y: [0, -20, 0] } : {}}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
-        className="absolute w-[400px] h-[400px] rounded-full blur-[120px]"
+        className="absolute w-[400px] h-[400px] rounded-full blur-[120px] max-w-[100vw]"
         style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.04), transparent 70%)', bottom: '-5%', left: '-5%' }}
         animate={inView ? { x: [0, -20, 0], y: [0, 25, 0] } : {}}
         transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-32">
+      <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-6 py-20 sm:py-32">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left — Headline */}
           <div>

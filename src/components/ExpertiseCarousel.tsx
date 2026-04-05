@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 const items = [
@@ -10,11 +10,21 @@ const items = [
   'Database Management',
 ];
 
-const SPACING = 210;
+function useSpacing() {
+  const getSpacing = useCallback(() => (typeof window !== 'undefined' && window.innerWidth < 400) ? 150 : 210, []);
+  const [spacing, setSpacing] = useState(getSpacing);
+  useEffect(() => {
+    const onResize = () => setSpacing(getSpacing());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [getSpacing]);
+  return spacing;
+}
 
 export function ExpertiseCarousel() {
   const [active, setActive] = useState(0);
   const len = items.length;
+  const SPACING = useSpacing();
 
   useEffect(() => {
     const t = setInterval(() => setActive((p) => (p + 1) % len), 2500);
@@ -24,7 +34,7 @@ export function ExpertiseCarousel() {
   const getIdx = (offset: number) => ((active + offset) % len + len) % len;
 
   return (
-    <div className="relative z-10 bg-white py-6 sm:py-8 px-4 sm:px-6 overflow-hidden">
+    <div className="relative z-10 bg-white py-6 sm:py-8 px-5 sm:px-6 overflow-hidden">
       <p className="text-center text-sm sm:text-base font-semibold text-dark-900 mb-5 flex items-center justify-center gap-2">
         <span className="text-coral-500">✦</span> Full-Stack Expertise Across the Modern Stack
       </p>
@@ -48,7 +58,7 @@ export function ExpertiseCarousel() {
               transition={{ type: 'spring', stiffness: 200, damping: 28, mass: 0.8 }}
             >
               <span
-                className="whitespace-nowrap rounded-full font-semibold px-6 py-2.5 text-sm sm:text-base select-none pointer-events-auto cursor-pointer"
+                className="whitespace-nowrap rounded-full font-semibold px-4 sm:px-6 py-2.5 text-xs sm:text-base select-none pointer-events-auto cursor-pointer"
                 onClick={() => setActive(idx)}
                 style={{
                   background: isCenter ? '#1a1a2e' : 'transparent',

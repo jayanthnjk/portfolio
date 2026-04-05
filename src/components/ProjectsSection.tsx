@@ -4,7 +4,7 @@ import { ProjectCard } from './ProjectCard';
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="py-16 sm:py-28 px-4 sm:px-6 bg-white overflow-hidden">
+    <section id="projects" className="py-16 sm:py-28 px-5 sm:px-6 bg-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         <AnimatedSection variant="fadeUp">
           <div className="text-center mb-16">
