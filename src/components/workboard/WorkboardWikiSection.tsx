@@ -4,39 +4,22 @@ import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { AnimatedSection } from '../AnimatedSection';
 import BeforeAfterTable from './BeforeAfterTable';
 import ArchitectureDiagram from './ArchitectureDiagram';
-import SecurityFlowDiagram from './SecurityFlowDiagram';
-import RequestFlowSteps from './RequestFlowSteps';
 import AnimatedRequestFlow from './AnimatedRequestFlow';
-import ScreenshotGallery from './ScreenshotGallery';
 import Lightbox from './Lightbox';
-import TechBadge from './TechBadge';
-import DesignPatternCard from './DesignPatternCard';
-import FeatureDomainCard from './FeatureDomainCard';
 import {
   PANELS,
-  BEFORE_AFTER_DATA,
-  TECH_STACK,
-  ARCH_DECISIONS,
-  DESIGN_PATTERNS_GROUPED,
-  DEV_CHANGES,
   SCREENSHOTS,
-  FEATURE_DOMAINS,
-  SECURITY_LAYERS,
   RBAC_HIERARCHY,
   CURRENT_BEHAVIOUR,
   SOLUTION_WHAT_CHANGED,
   WHY_AI_CAPABILITIES,
   AI_ESSENTIAL,
-  AI_OPTIONAL,
   LLM_COMPARISON,
-  LLM_TRADEOFFS,
   LLM_LIMITATIONS,
   LLM_DATA_VISIBILITY,
   SECURITY_MEASURES,
   EXTENDED_ARCH_DECISIONS,
-  EXTENDED_DEV_CHANGES,
-  REQUEST_FLOW_STEPS,
-  DB_KEY_TABLES,
+  DESIGN_PATTERNS_GROUPED,
 } from '../../data/workboardData';
 
 export function WorkboardWikiSection({ embedded = false }: { embedded?: boolean }) {
@@ -170,7 +153,7 @@ export function WorkboardWikiSection({ embedded = false }: { embedded?: boolean 
                         </ul>
                         {/* Mobile: horizontal scroll */}
                         <ul className="flex lg:hidden gap-1 overflow-x-auto scrollbar-hide">
-                          {PANELS.map((panel, i) => {
+                          {PANELS.map((panel) => {
                             const isActive = panel.id === activeSection;
                             return (
                               <li key={panel.id}>
