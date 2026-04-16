@@ -5,8 +5,6 @@ import { HeroIllustration } from './HeroIllustration';
 
 import { DomainRotator } from './DomainRotator';
 
-import { ExpertiseCarousel } from './ExpertiseCarousel';
-
 export function HeroSection() {
   const r = useReducedMotion();
   const cV = r ? undefined : staggerContainer;
@@ -56,9 +54,6 @@ export function HeroSection() {
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Brand strip */}
-      <ExpertiseCarousel />
     </section>
   );
 }

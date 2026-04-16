@@ -211,6 +211,22 @@ body {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
+/* iOS Safari performance fixes */
+@supports (-webkit-touch-callout: none) {
+  .backdrop-blur-sm, .backdrop-blur-md, [style*="backdrop-filter"] {
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+/* GPU acceleration for animated elements */
+.card-elevated, .card-dark, .case-card, .blog-card {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }

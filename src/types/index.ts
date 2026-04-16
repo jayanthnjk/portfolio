@@ -27,3 +27,57 @@ export interface ContactFormErrors {
   email?: string;
   intent?: string;
 }
+
+// Workboard Wiki Section
+export interface PanelConfig {
+  id: string;
+  title: string;
+  icon: string;
+}
+
+export interface BeforeAfterRow {
+  area: string;
+  before: string;
+  after: string;
+}
+
+export interface TechItem {
+  name: string;
+  version?: string;
+  purpose: string;
+}
+
+export interface TechCategory {
+  category: string;
+  items: TechItem[];
+}
+
+export interface ArchDecision {
+  decision: string;
+  chosen: string;
+  considered: string;
+  reasoning: string;
+}
+
+export interface DesignPattern {
+  name: string;
+  location: string;
+  reason: string;
+}
+
+export interface DevChange {
+  original: string;
+  changedTo: string;
+  reason: string;
+}
+
+export interface Screenshot {
+  src: string;
+  alt: string;
+}
+
+export interface FeatureDomain {
+  icon: string;
+  title: string;
+  description: string;
+}

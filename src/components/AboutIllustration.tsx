@@ -2,22 +2,22 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 
 const LAYERS = [
-  { label: 'UI/UX Design', sub: 'Figma • Google Stitch • Prototyping', color: '#f472b6',
+  { label: 'UI/UX Design', sub: 'Figma \u2022 Google Stitch \u2022 Prototyping', color: '#f472b6',
     desc: 'Translating business requirements into intuitive wireframes and interactive prototypes. Focused on user-centered design principles that reduce friction.',
     tags: ['Figma', 'Google Stitch', 'Wireframing', 'Prototyping'] },
-  { label: 'UI Development', sub: 'React • Angular • TypeScript • JavaScript', color: '#38bdf8',
+  { label: 'UI Development', sub: 'React \u2022 Angular \u2022 TypeScript \u2022 JavaScript', color: '#38bdf8',
     desc: 'Crafting responsive, high-performance user interfaces with React and Angular. Strong command over TypeScript, JavaScript ES6+, and modern CSS frameworks.',
     tags: ['React', 'Angular', 'TypeScript', 'JavaScript', 'Tailwind CSS'] },
-  { label: 'Backend Development', sub: 'Java • Python • Node.js', color: '#ff6b4a',
+  { label: 'Backend Development', sub: 'Java \u2022 Python \u2022 Node.js', color: '#ff6b4a',
     desc: 'Building robust, scalable microservices and RESTful APIs with Spring Boot, FastAPI, and NestJS. Event-driven architectures with full test coverage.',
     tags: ['Spring Boot', 'FastAPI', 'NestJS', 'REST APIs', 'Microservices'] },
-  { label: 'Database Management', sub: 'PostgreSQL • Oracle • DynamoDB • MongoDB', color: '#34d399',
+  { label: 'Database Management', sub: 'PostgreSQL \u2022 Oracle \u2022 DynamoDB \u2022 MongoDB', color: '#34d399',
     desc: 'Designing optimized schemas and complex queries across SQL and NoSQL. PL/SQL, stored procedures, triggers, and performance tuning.',
     tags: ['PostgreSQL', 'Oracle SQL', 'DynamoDB', 'MongoDB', 'PL/SQL'] },
-  { label: 'Cloud & DevOps', sub: 'AWS • Azure • CI/CD', color: '#fbbf24',
+  { label: 'Cloud & DevOps', sub: 'AWS \u2022 Azure \u2022 CI/CD', color: '#fbbf24',
     desc: 'AWS Certified engineer with deep expertise across the full AWS ecosystem and Azure. Serverless architectures, containers, and automated CI/CD pipelines.',
     tags: ['AWS', 'Azure', 'Serverless', 'CI/CD', 'Docker'] },
-  { label: 'AI & LLM Integration', sub: 'GPT • Claude • Groq', color: '#a78bfa',
+  { label: 'AI & LLM Integration', sub: 'GPT \u2022 Claude \u2022 Groq', color: '#a78bfa',
     desc: 'Integrating cutting-edge AI and large language models into production apps. RAG pipelines, prompt engineering, and AI-powered automation.',
     tags: ['GPT', 'Claude', 'Groq', 'RAG', 'Prompt Engineering'] },
 ];
@@ -81,22 +81,30 @@ export function AboutIllustration() {
 
             {/* Card */}
             <motion.div
-              className="flex-1 min-w-0 mb-1 rounded-xl overflow-hidden cursor-pointer"
+              className="flex-1 min-w-0 mb-1.5 rounded-xl overflow-hidden cursor-pointer group/skill"
               style={{
                 background: reached ? 'linear-gradient(135deg, #1e1e38 0%, #1a1a2e 100%)' : '#14142a',
                 border: `1px solid ${isOpen ? layer.color + '40' : reached ? '#ffffff0a' : '#ffffff04'}`,
-                boxShadow: isOpen ? `0 4px 20px ${layer.color}15` : reached ? '0 2px 8px rgba(0,0,0,0.15)' : 'none',
+                boxShadow: isOpen ? `0 4px 24px ${layer.color}18, 0 0 0 1px ${layer.color}20` : reached ? '0 2px 8px rgba(0,0,0,0.15)' : 'none',
               }}
               onClick={() => setExpanded(isOpen ? null : i)}
               animate={reached ? { opacity: 1, x: 0 } : { opacity: 0.2, x: 8 }}
               transition={{ duration: 0.4 }}
               layout
             >
+              {/* Top accent bar */}
+              <motion.div className="h-[2px]"
+                style={{ background: layer.color }}
+                animate={{ opacity: isOpen ? 1 : 0.15 }}
+                transition={{ duration: 0.3 }} />
+
               <div className="flex items-center gap-2.5 px-3 py-2.5">
-                <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                  style={{ background: `${layer.color}18`, color: layer.color }}>
+                <motion.div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                  style={{ background: `${layer.color}15`, color: layer.color }}
+                  animate={isOpen ? { scale: 1.05, background: `${layer.color}25` } : { scale: 1 }}
+                  transition={{ duration: 0.2 }}>
                   {ICONS[i]}
-                </div>
+                </motion.div>
                 <div className="flex-1 min-w-0">
                   <p className="text-white text-sm font-bold truncate">{layer.label}</p>
                   <p className="text-gray-500 text-[11px] truncate">{layer.sub}</p>
@@ -112,14 +120,14 @@ export function AboutIllustration() {
                   <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }}
                     className="overflow-hidden">
-                    <div className="px-3 pb-3" style={{ borderTop: `1px solid ${layer.color}15` }}>
-                      <p className="text-gray-400 text-xs leading-relaxed mt-2 mb-2">{layer.desc}</p>
+                    <div className="px-3 pb-3" style={{ borderTop: `1px solid ${layer.color}12` }}>
+                      <p className="text-gray-400 text-xs leading-relaxed mt-2 mb-2.5">{layer.desc}</p>
                       <div className="flex flex-wrap gap-1.5">
                         {layer.tags.map((tag, ti) => (
                           <motion.span key={tag} className="text-[11px] font-semibold px-2 py-0.5 rounded-md"
                             style={{ background: `${layer.color}15`, color: layer.color }}
-                            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                            transition={{ delay: ti * 0.03 }}>
+                            initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: ti * 0.04 }}>
                             {tag}
                           </motion.span>
                         ))}

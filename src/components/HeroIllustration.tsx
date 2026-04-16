@@ -60,11 +60,11 @@ export function HeroIllustration() {
             <stop offset="100%" stopColor="#ff8a73" stopOpacity="0.2" />
           </linearGradient>
           <filter id="glow">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feGaussianBlur stdDeviation="3" result="blur" />
             <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
           <filter id="glowStrong">
-            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feGaussianBlur stdDeviation="4" result="blur" />
             <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
         </defs>
@@ -103,7 +103,7 @@ export function HeroIllustration() {
           );
         })()}
 
-        {/* Center icon — brighter, bigger */}
+        {/* Center icon */}
         <motion.g initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
           <circle cx="200" cy="200" r="26" fill="rgba(255,107,74,0.15)" stroke="#ff6b4a" strokeWidth="2" filter="url(#glowStrong)" />
@@ -154,8 +154,9 @@ export function HeroIllustration() {
           transition={{ duration: 7, repeat: Infinity, ease: 'linear' }} />
       </motion.svg>
 
-      {/* Ambient glow — bigger, brighter */}
+      {/* Ambient glow */}
       <div className="absolute w-56 h-56 bg-coral-500/15 rounded-full blur-3xl" aria-hidden="true" />
     </div>
   );
 }
+
