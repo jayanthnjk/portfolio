@@ -26,10 +26,10 @@ export function DomainRotator() {
         <AnimatePresence mode="wait">
           <motion.div
             key={current.text}
-            initial={{ y: 30, opacity: 0, filter: 'blur(6px)' }}
-            animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-            exit={{ y: -30, opacity: 0, filter: 'blur(6px)' }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -20, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0 flex items-center"
           >
             <span className="inline-flex items-center gap-2 bg-dark-800/60 backdrop-blur-sm border border-coral-500/20 rounded-lg px-3 sm:px-4 py-1 sm:py-1.5 shadow-lg shadow-coral-500/5">

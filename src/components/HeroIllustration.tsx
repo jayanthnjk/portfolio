@@ -22,19 +22,20 @@ export function HeroIllustration() {
     <div className="relative w-full h-full flex items-center justify-center">
       {/* Large pulsing glow */}
       <motion.div className="absolute w-80 h-80 rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(255,107,74,0.25) 0%, rgba(255,107,74,0.08) 40%, transparent 70%)' }}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }} />
+        style={{ background: 'radial-gradient(circle, rgba(255,107,74,0.25) 0%, rgba(255,107,74,0.08) 40%, transparent 70%)', willChange: 'transform' }}
+        animate={{ scale: [1, 1.12, 1], opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }} />
 
       {/* Secondary glow */}
       <motion.div className="absolute w-60 h-60 rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(255,138,115,0.15) 0%, transparent 60%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(255,138,115,0.15) 0%, transparent 60%)', willChange: 'transform' }}
         animate={{ scale: [1.1, 1, 1.1] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }} />
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }} />
 
       {/* Outer rotating ring — brighter */}
       <motion.svg viewBox="0 0 400 400" className="absolute w-[95%] h-[95%]"
-        animate={{ rotate: 360 }} transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}>
+        style={{ willChange: 'transform' }}
+        animate={{ rotate: 360 }} transition={{ duration: 80, repeat: Infinity, ease: 'linear' }}>
         <defs>
           <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#ff6b4a" stopOpacity="0.7" />
@@ -47,7 +48,8 @@ export function HeroIllustration() {
 
       {/* Counter-rotating middle ring — brighter */}
       <motion.svg viewBox="0 0 400 400" className="absolute w-[75%] h-[75%]"
-        animate={{ rotate: -360 }} transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}>
+        style={{ willChange: 'transform' }}
+        animate={{ rotate: -360 }} transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}>
         <circle cx="200" cy="200" r="185" fill="none" stroke="rgba(255,107,74,0.2)" strokeWidth="1" />
       </motion.svg>
 
@@ -125,21 +127,21 @@ export function HeroIllustration() {
           );
         })}
 
-        {/* Data packets — bigger, brighter */}
-        {NODES.map((n, i) => {
+        {/* Data packets — reduced to 3 for performance */}
+        {NODES.filter((_, i) => i % 2 === 0).map((n, i) => {
           const outer = nodePos(n.angle, R_OUTER);
           return (
-            <motion.circle key={`packet-${i}`} r="3.5" fill="#ff6b4a" filter="url(#glowStrong)"
+            <motion.circle key={`packet-${i}`} r="3.5" fill="#ff6b4a" filter="url(#glow)"
               animate={{
                 cx: [200, outer.x, 200],
                 cy: [200, outer.y, 200],
                 opacity: [0, 1, 0],
               }}
               transition={{
-                delay: 2 + i * 0.7,
-                duration: 2,
+                delay: 2 + i * 1.2,
+                duration: 2.5,
                 repeat: Infinity,
-                repeatDelay: 2.5,
+                repeatDelay: 4,
                 ease: 'easeInOut',
               }} />
           );
@@ -147,11 +149,12 @@ export function HeroIllustration() {
 
         {/* Orbiting particle — brighter */}
         <motion.circle r="4" fill="#ff8a73" opacity="0.9" filter="url(#glow)"
+          style={{ willChange: 'transform' }}
           animate={{
             cx: [0, 60, 120, 180, 240, 300, 360].map((a) => nodePos(a, 105).x),
             cy: [0, 60, 120, 180, 240, 300, 360].map((a) => nodePos(a, 105).y),
           }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'linear' }} />
+          transition={{ duration: 10, repeat: Infinity, ease: 'linear' }} />
       </motion.svg>
 
       {/* Ambient glow */}

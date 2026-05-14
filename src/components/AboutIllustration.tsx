@@ -2,33 +2,29 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 
 const LAYERS = [
-  { label: 'UI/UX Design', sub: 'Figma \u2022 Google Stitch \u2022 Prototyping', color: '#f472b6',
-    desc: 'Translating business requirements into intuitive wireframes and interactive prototypes. Focused on user-centered design principles that reduce friction.',
-    tags: ['Figma', 'Google Stitch', 'Wireframing', 'Prototyping'] },
-  { label: 'UI Development', sub: 'React \u2022 Angular \u2022 TypeScript \u2022 JavaScript', color: '#38bdf8',
-    desc: 'Crafting responsive, high-performance user interfaces with React and Angular. Strong command over TypeScript, JavaScript ES6+, and modern CSS frameworks.',
-    tags: ['React', 'Angular', 'TypeScript', 'JavaScript', 'Tailwind CSS'] },
-  { label: 'Backend Development', sub: 'Java \u2022 Python \u2022 Node.js', color: '#ff6b4a',
-    desc: 'Building robust, scalable microservices and RESTful APIs with Spring Boot, FastAPI, and NestJS. Event-driven architectures with full test coverage.',
-    tags: ['Spring Boot', 'FastAPI', 'NestJS', 'REST APIs', 'Microservices'] },
-  { label: 'Database Management', sub: 'PostgreSQL \u2022 Oracle \u2022 DynamoDB \u2022 MongoDB', color: '#34d399',
-    desc: 'Designing optimized schemas and complex queries across SQL and NoSQL. PL/SQL, stored procedures, triggers, and performance tuning.',
-    tags: ['PostgreSQL', 'Oracle SQL', 'DynamoDB', 'MongoDB', 'PL/SQL'] },
-  { label: 'Cloud & DevOps', sub: 'AWS \u2022 Azure \u2022 CI/CD', color: '#fbbf24',
-    desc: 'AWS Certified engineer with deep expertise across the full AWS ecosystem and Azure. Serverless architectures, containers, and automated CI/CD pipelines.',
-    tags: ['AWS', 'Azure', 'Serverless', 'CI/CD', 'Docker'] },
-  { label: 'AI & LLM Integration', sub: 'GPT \u2022 Claude \u2022 Groq', color: '#a78bfa',
-    desc: 'Integrating cutting-edge AI and large language models into production apps. RAG pipelines, prompt engineering, and AI-powered automation.',
-    tags: ['GPT', 'Claude', 'Groq', 'RAG', 'Prompt Engineering'] },
+  { label: 'Languages', sub: 'Java \u2022 Python \u2022 JavaScript \u2022 TypeScript \u2022 SQL', color: '#f472b6',
+    desc: 'Strong command across multiple programming paradigms — object-oriented, functional, and scripting. Production experience with Java 21, Python 3.x, TypeScript, and SQL across enterprise systems.',
+    tags: ['Java', 'Python', 'JavaScript', 'TypeScript', 'SQL', 'HTML5', 'CSS3'] },
+  { label: 'Backend & Distributed Systems', sub: 'Spring Boot \u2022 Microservices \u2022 Event-Driven', color: '#38bdf8',
+    desc: 'Building robust, scalable microservices and RESTful APIs with Spring Boot and Node.js. Event-driven architectures, workflow orchestration, async processing, and RBAC system design.',
+    tags: ['Spring Boot', 'Spring AI', 'Node.js', 'NestJS', 'REST APIs', 'Microservices', 'Event-Driven Architecture', 'RBAC'] },
+  { label: 'AI & Agentic Systems', sub: 'GPT-4o \u2022 Claude \u2022 Llama \u2022 RAG Pipelines', color: '#ff6b4a',
+    desc: 'Building production AI systems with LLMs, RAG pipelines, hybrid retrieval, multi-agent architectures, tool calling, and MCP. Hands-on with AWS Bedrock, Groq, LangChain, and LangGraph.',
+    tags: ['OpenAI GPT-4o', 'Claude', 'Llama 3.3', 'Groq', 'AWS Bedrock', 'RAG Pipelines', 'Multi-Agent Systems', 'MCP', 'Prompt Engineering', 'Amazon Q'] },
+  { label: 'Cloud, Databases & DevOps', sub: 'AWS \u2022 Docker \u2022 Kubernetes \u2022 PostgreSQL', color: '#34d399',
+    desc: 'Deep AWS expertise across ECS, Lambda, Step Functions, and managed databases. Container orchestration with Docker and Kubernetes. CI/CD pipelines, observability with Grafana and Prometheus.',
+    tags: ['AWS', 'Docker', 'Kubernetes', 'PostgreSQL', 'Oracle SQL', 'pgvector', 'Pinecone', 'DynamoDB', 'GitLab CI/CD', 'Grafana', 'Prometheus'] },
+  { label: 'Frontend & Developer Tools', sub: 'React \u2022 Angular \u2022 TypeScript \u2022 Tailwind', color: '#fbbf24',
+    desc: 'Crafting responsive, high-performance user interfaces with React and Angular. Modern tooling with GitHub, GitLab, Postman, Swagger, and AI-powered IDEs.',
+    tags: ['Angular', 'React', 'TypeScript', 'Tailwind CSS', 'GitHub', 'GitLab', 'Postman', 'Swagger', 'VS Code', 'IntelliJ IDEA', 'Kiro'] },
 ];
 
 const ICONS = [
-  <svg key="0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><path d="M12 19l7-7 3 3-7 7-3-3z" /><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" /></svg>,
-  <svg key="1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg>,
-  <svg key="2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /></svg>,
-  <svg key="3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" /><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" /></svg>,
-  <svg key="4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z" /></svg>,
-  <svg key="5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><circle cx="12" cy="12" r="3" /><path d="M12 2v4m0 12v4m-7.07-15.07l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" /></svg>,
+  <svg key="0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><path d="M16 18l6-6-6-6" /><path d="M8 6l-6 6 6 6" /></svg>,
+  <svg key="1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /></svg>,
+  <svg key="2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><circle cx="12" cy="12" r="3" /><path d="M12 2v4m0 12v4m-7.07-15.07l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" /></svg>,
+  <svg key="3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z" /></svg>,
+  <svg key="4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg>,
 ];
 
 export function AboutIllustration() {
@@ -90,7 +86,6 @@ export function AboutIllustration() {
               onClick={() => setExpanded(isOpen ? null : i)}
               animate={reached ? { opacity: 1, x: 0 } : { opacity: 0.2, x: 8 }}
               transition={{ duration: 0.4 }}
-              layout
             >
               {/* Top accent bar */}
               <motion.div className="h-[2px]"

@@ -25,7 +25,7 @@ export function AnimatedSection({
   className,
 }: AnimatedSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.15, margin: '0px 0px -50px 0px' });
   const prefersReducedMotion = useReducedMotion();
 
   if (prefersReducedMotion) {
@@ -42,6 +42,7 @@ export function AnimatedSection({
       animate={isInView ? 'visible' : 'hidden'}
       transition={delay ? { delay } : undefined}
       className={className}
+      style={{ willChange: 'transform, opacity' }}
     >
       {children}
     </motion.div>

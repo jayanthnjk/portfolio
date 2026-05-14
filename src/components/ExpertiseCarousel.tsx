@@ -2,12 +2,11 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 const items = [
-  'UI Development',
-  'UI/UX Design',
-  'Backend Development',
-  'Cloud & DevOps',
-  'AI & LLM Integration',
-  'Database Management',
+  'Languages',
+  'Backend & Distributed Systems',
+  'AI & Agentic Systems',
+  'Cloud, Databases & DevOps',
+  'Frontend & Developer Tools',
 ];
 
 function useSpacing() {

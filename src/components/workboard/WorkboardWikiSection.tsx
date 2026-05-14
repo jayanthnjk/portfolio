@@ -93,7 +93,7 @@ export function WorkboardWikiSection({ embedded = false }: { embedded?: boolean 
                       Karnataka State Police Workboard
                     </h3>
                     <p className="text-xs text-gray-400 mt-1 leading-relaxed">
-                      AI-powered shift management and duty roster platform for the CAR unit - managing 572+ personnel with intelligent scheduling, voice commands, and document intelligence.
+                      AI-powered shift management and duty roster platform for the CAR unit - managing a large-scale police workforce with intelligent scheduling, voice commands, and document intelligence.
                     </p>
                     {/* Tech tags */}
                     <div className="flex flex-wrap gap-1.5 mt-2.5">
@@ -244,7 +244,7 @@ function SectionContent({ activeSection, openLightbox }: { activeSection: string
           {/* Problem Statement */}
           <div className="space-y-4">
             <p className="text-gray-300 leading-relaxed">
-              The Karnataka State Police CAR (City Armed Reserve) MT Section manages <strong className="text-white">572 active personnel</strong> across three operational sections, plus 111 personnel on training and 24 recruit APCs. Every day, officers must be assigned to guard duties across 22 locations, VIP escorts, check posts (3 shifts), striking force teams, court duties, cash escorts, and prison escorts - all following a strict 15-day platoon rotation cycle.
+              The Karnataka State Police CAR (City Armed Reserve) MT Section manages a <strong className="text-white">massive active workforce</strong> across multiple operational sections, plus personnel on training and recruit APCs. Every day, officers must be assigned to guard duties across numerous locations, VIP escorts, check posts (multiple shifts), striking force teams, court duties, cash escorts, and prison escorts - all following a strict platoon rotation cycle.
             </p>
             <ul className="space-y-2">
               {[

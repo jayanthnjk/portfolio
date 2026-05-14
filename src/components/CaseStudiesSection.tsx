@@ -14,54 +14,44 @@ function SREArchDiagram() {
   return (
     <div className="rounded-xl border border-gray-100 bg-gray-50/50 p-4 overflow-x-auto scrollbar-hide">
       <div className="min-w-[500px] space-y-3">
-        {/* Row 1: Client */}
-        <ArchRow label="Client" color="#ff6b4a" delay={0}>
-          <ArchNode label="Load Generator" color="#ff6b4a" delay={0.1} />
-          <ArchNode label="API Client" color="#ff6b4a" delay={0.2} />
+        {/* Row 1: Ingestion Pipeline */}
+        <ArchRow label="Ingestion" color="#3b82f6" delay={0}>
+          <ArchNode label="Document Loader" color="#3b82f6" delay={0.1} />
+          <ArchNode label="Legal-Aware Chunker" color="#3b82f6" delay={0.2} />
+          <ArchNode label="Embedding Service" color="#3b82f6" delay={0.3} />
         </ArchRow>
 
-        {/* Row 2: Gateway */}
-        <ArchRow label="Gateway" color="#3b82f6" delay={0.3}>
-          <ArchNode label="api-gateway" color="#3b82f6" delay={0.4} mono />
-          <ArchNode label="Routing" color="#3b82f6" delay={0.45} />
-          <ArchNode label="Rate Limit" color="#3b82f6" delay={0.5} />
-          <ArchNode label="Correlation" color="#3b82f6" delay={0.55} />
+        {/* Row 2: Storage */}
+        <ArchRow label="Storage" color="#8b5cf6" delay={0.4}>
+          <ArchNode label="OpenSearch (k-NN + BM25)" color="#8b5cf6" delay={0.5} mono />
+          <ArchNode label="Metadata Index" color="#8b5cf6" delay={0.55} />
         </ArchRow>
 
-        {/* Row 3: Business Services */}
-        <ArchRow label="Business Services" color="#10b981" delay={0.6}>
-          <ArchNode label="user-service" color="#10b981" delay={0.7} mono />
-          <ArchNode label="order-service" color="#10b981" delay={0.75} mono />
-          <ArchNode label="payment-service" color="#10b981" delay={0.8} mono />
-        </ArchRow>
-
-        {/* Row 4: Infrastructure */}
-        <ArchRow label="Infrastructure" color="#8b5cf6" delay={0.9}>
-          <ArchNode label="PostgreSQL" color="#8b5cf6" delay={1.0} />
-          <ArchNode label="Redis" color="#8b5cf6" delay={1.05} />
-          <ArchNode label="RabbitMQ" color="#8b5cf6" delay={1.1} />
+        {/* Row 3: Query Pipeline */}
+        <ArchRow label="Query" color="#10b981" delay={0.6}>
+          <ArchNode label="Hybrid Retrieval" color="#10b981" delay={0.7} />
+          <ArchNode label="Prompt Builder" color="#10b981" delay={0.75} />
+          <ArchNode label="Claude (Bedrock)" color="#10b981" delay={0.8} highlight />
         </ArchRow>
 
         {/* Divider */}
         <div className="border-t border-dashed border-gray-200 my-1" />
 
-        {/* Row 5: Observability */}
-        <ArchRow label="Observability" color="#f59e0b" delay={1.2}>
-          <ArchNode label="OTel Collector" color="#f59e0b" delay={1.3} />
-          <ArchNode label="Prometheus" color="#f59e0b" delay={1.35} />
-          <ArchNode label="Loki" color="#f59e0b" delay={1.4} />
-          <ArchNode label="Tempo" color="#f59e0b" delay={1.45} />
-          <ArchNode label="Grafana" color="#f59e0b" delay={1.5} />
+        {/* Row 4: Verification */}
+        <ArchRow label="Verification" color="#f59e0b" delay={0.9}>
+          <ArchNode label="Citation Verifier" color="#f59e0b" delay={1.0} />
+          <ArchNode label="Confidence Scorer" color="#f59e0b" delay={1.05} />
+          <ArchNode label="Audit Logger" color="#f59e0b" delay={1.1} />
         </ArchRow>
 
         {/* Divider */}
         <div className="border-t border-dashed border-gray-200 my-1" />
 
-        {/* Row 6: Control Plane */}
-        <ArchRow label="Control Plane (SRE)" color="#ef4444" delay={1.5}>
-          <ArchNode label="chaos-controller" color="#ef4444" delay={1.6} mono />
-          <ArchNode label="incident-detector" color="#ef4444" delay={1.65} mono />
-          <ArchNode label="ai-analyzer" color="#ef4444" delay={1.7} mono highlight />
+        {/* Row 5: AWS Infrastructure */}
+        <ArchRow label="AWS" color="#ef4444" delay={1.2}>
+          <ArchNode label="Titan V2 (dev)" color="#ef4444" delay={1.3} mono />
+          <ArchNode label="Cohere Embed 4 (prod)" color="#ef4444" delay={1.35} mono />
+          <ArchNode label="Circuit Breaker" color="#ef4444" delay={1.4} />
         </ArchRow>
       </div>
     </div>
@@ -72,9 +62,9 @@ function ArchRow({ label, color, delay, children }: { label: string; color: stri
   return (
     <motion.div
       className="flex items-center gap-3"
-      initial={{ opacity: 0, x: -12 }}
+      initial={{ opacity: 0, x: -8 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ delay, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ delay: delay * 0.6, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="w-28 shrink-0 text-right pr-2 border-r-2" style={{ borderColor: color }}>
         <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color }}>{label}</span>
@@ -96,9 +86,9 @@ function ArchNode({ label, color, delay, mono, highlight }: { label: string; col
         color: color,
         ...(highlight ? { ringColor: color } : {}),
       }}
-      initial={{ opacity: 0, scale: 0.8 }}
+      initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ delay: delay * 0.6, duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
     >
       {label}
     </motion.span>
@@ -111,21 +101,21 @@ function SREContent({ section }: { section: string }) {
       return (
         <div className="space-y-4">
           <p className="text-sm text-gray-600 leading-relaxed">
-            A production-style engineering platform designed to simulate real incidents in a distributed microservice system and use AI to help engineers understand failures faster.
+            A production-grade RAG (Retrieval-Augmented Generation) pipeline built for regulatory compliance. It answers GDPR, FCA, and internal policy questions with verifiable citations, confidence scoring, and a complete audit trail.
           </p>
           <p className="text-sm text-gray-600 leading-relaxed">
-            The platform combines Java microservices, observability with metrics/logs/traces, controlled fault injection, incident detection, and AI-assisted root-cause analysis.
+            Unlike generic chatbots, this system is designed for zero-hallucination tolerance — every claim must map to a specific source document, and the system explicitly says "I don't have enough information" rather than fabricating answers.
           </p>
           <div className="rounded-lg bg-gray-50 border border-gray-100 p-3">
             <p className="text-xs font-semibold text-dark-900 mb-1">Core Question</p>
-            <p className="text-sm text-gray-600 italic">"How do we reduce the time and effort needed to detect, understand, and respond to failures in distributed systems?"</p>
+            <p className="text-sm text-gray-600 italic">"How do we give compliance teams instant, trustworthy, auditable answers to regulatory questions — without risking hallucinated legal references?"</p>
           </div>
           <div className="flex flex-wrap gap-4 text-center">
             {[
-              { value: '7', label: 'Microservices' },
-              { value: '4', label: 'Observability Tools' },
-              { value: 'AI', label: 'Root Cause Analysis' },
-              { value: '6', label: 'Fault Scenarios' },
+              { value: '95%', label: 'Citation Accuracy' },
+              { value: '~5s', label: 'Response Time' },
+              { value: '100%', label: 'Audit Coverage' },
+              { value: '4', label: 'Design Patterns' },
             ].map(s => (
               <div key={s.label} className="flex-1 min-w-[80px] rounded-lg bg-gray-50 border border-gray-100 p-2.5">
                 <span className="text-lg font-bold text-coral-500 block">{s.value}</span>
@@ -139,14 +129,14 @@ function SREContent({ section }: { section: string }) {
       return (
         <div className="space-y-4">
           <p className="text-sm text-gray-600 leading-relaxed">
-            Distributed systems fail in complex ways. A single dependency slowdown can trigger retries, queue buildup, latency spikes, and cross-service degradation.
+            Compliance teams spend 2-4 hours per regulatory question manually searching through 500+ page documents. GDPR fines reached €1.5 billion in 2024-2025. A wrong compliance answer has legal consequences.
           </p>
           <ul className="space-y-2">
             {[
-              { title: 'Source unclear', desc: 'The origin of a failure is often hidden behind cascading effects' },
-              { title: 'Impact spreads', desc: 'One slow service degrades multiple downstream consumers' },
-              { title: 'Evidence scattered', desc: 'Signals live across dashboards, logs, traces, and dependency chains' },
-              { title: 'Response depends on speed', desc: 'Fast correlation and good judgment are needed under pressure' },
+              { title: 'Manual search is slow', desc: 'Officers dig through GDPR, FCA, Ofcom, internal policies, and audit reports for every question' },
+              { title: 'Generic AI hallucinates', desc: 'LLMs fabricate legal references that sound plausible but don\'t exist — dangerous in compliance' },
+              { title: 'No audit trail', desc: 'Can\'t prove which sources were used for a decision when auditors ask' },
+              { title: 'Version confusion', desc: 'Regulations get amended, but internal policies still reference outdated versions' },
             ].map(item => (
               <li key={item.title} className="flex items-start gap-2 text-sm text-gray-600">
                 <span className="w-1.5 h-1.5 rounded-full bg-coral-500 shrink-0 mt-1.5" />
@@ -155,21 +145,21 @@ function SREContent({ section }: { section: string }) {
             ))}
           </ul>
           <div className="rounded-lg bg-red-50 border border-red-100 p-3">
-            <p className="text-xs font-semibold text-red-700 mb-1">Business Pain</p>
-            <p className="text-xs text-red-600">Slower incident response, reduced reliability, higher on-call burden, longer recovery time, more engineering hours on manual triage.</p>
+            <p className="text-xs font-semibold text-red-700 mb-1">Business Risk</p>
+            <p className="text-xs text-red-600">Non-compliance fines up to €20M or 4% of global revenue. For large enterprises, this means hundreds of millions in potential exposure. A fabricated citation used in an audit response could trigger regulatory action.</p>
           </div>
         </div>
       );
     case 'solution':
       return (
         <div className="space-y-4">
-          <p className="text-sm text-gray-600 leading-relaxed">A layered platform with four major capabilities:</p>
+          <p className="text-sm text-gray-600 leading-relaxed">A pipeline architecture with four major capabilities:</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {[
-              { num: '01', title: 'Business Workflow', desc: 'Realistic order-processing with gateway, user, order, and payment services' },
-              { num: '02', title: 'Observability-First', desc: 'Metrics, logs, and traces captured from day one using Prometheus, Grafana, Loki, Tempo' },
-              { num: '03', title: 'Controlled Chaos', desc: 'Latency spikes, 5xx bursts, DB slowdowns, and cache outages injected intentionally' },
-              { num: '04', title: 'AI-Assisted RCA', desc: 'Telemetry evidence collected and summarized by AI with likely root cause and safe next steps' },
+              { num: '01', title: 'Legal-Aware Chunking', desc: 'Splits documents by article/section boundaries, never mid-clause. Preserves cross-references.' },
+              { num: '02', title: 'Hybrid Retrieval', desc: 'Combines vector similarity (semantic) + BM25 keyword matching in a single OpenSearch query for ~85% precision.' },
+              { num: '03', title: 'Attributed Generation', desc: 'LLM answers ONLY from retrieved context with [SOURCE_N] citations. Post-generation verification catches hallucinations.' },
+              { num: '04', title: 'Audit + Versioning', desc: 'Every interaction logged. Document versions tracked. Outdated references flagged automatically.' },
             ].map(c => (
               <div key={c.num} className="rounded-lg border border-gray-100 p-3">
                 <span className="text-[10px] font-bold text-coral-500">{c.num}</span>
@@ -179,9 +169,9 @@ function SREContent({ section }: { section: string }) {
             ))}
           </div>
           <div className="space-y-1">
-            <p className="text-xs font-semibold text-dark-900">7 Services</p>
+            <p className="text-xs font-semibold text-dark-900">Design Patterns</p>
             <div className="flex flex-wrap gap-1.5">
-              {['api-gateway', 'user-service', 'order-service', 'payment-service', 'chaos-controller', 'incident-detector', 'ai-analyzer'].map(s => (
+              {['Strategy (Embedding/LLM swap)', 'Pipeline (staged processing)', 'Repository (VectorStore)', 'Circuit Breaker (AWS resilience)'].map(s => (
                 <span key={s} className="text-[10px] font-mono text-gray-500 bg-gray-50 border border-gray-100 px-2 py-0.5 rounded">{s}</span>
               ))}
             </div>
@@ -192,7 +182,7 @@ function SREContent({ section }: { section: string }) {
       return (
         <div className="space-y-4">
           <p className="text-sm text-gray-600 leading-relaxed">
-            The architecture provides a realistic balance of business flow and operational complexity with synchronous dependencies, persistent state, async messaging, and clear observability signals.
+            Two pipelines — ingestion (offline) and query (per-request) — with cross-cutting concerns for audit, confidence, and resilience. Strategy pattern enables swapping Titan↔Cohere and InMemory↔OpenSearch via config.
           </p>
           <SREArchDiagram />
         </div>
@@ -202,10 +192,10 @@ function SREContent({ section }: { section: string }) {
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {[
-              { title: 'Faster Incident Triage', desc: 'Evidence gathered and summarized automatically - reduces manual dashboard/log/trace correlation' },
-              { title: 'Reliability Readiness', desc: 'Test retries, circuit breakers, timeouts, and fault tolerance before production' },
-              { title: 'Platform Visibility', desc: 'Complete view of request health, dependency health, queue pressure, and failure correlation' },
-              { title: 'Reusable Blueprint', desc: 'Architecture can evolve into training platform, demo environment, or internal observability template' },
+              { title: 'Hours → Seconds', desc: 'Compliance questions answered in ~5s instead of 2-4 hours of manual research' },
+              { title: 'Verifiable Citations', desc: 'Every claim maps to a specific article/section — auditor-ready from day one' },
+              { title: 'Zero Hallucination Design', desc: 'System says "insufficient context" rather than fabricating. Citation verification catches 95% of LLM hallucinations.' },
+              { title: 'Production-Ready Architecture', desc: 'Profile-based config (dev/prod), circuit breakers, OpenSearch for scale, full audit logging' },
             ].map(i => (
               <div key={i.title} className="rounded-lg border border-gray-100 p-3">
                 <p className="text-xs font-semibold text-dark-900">{i.title}</p>
@@ -215,7 +205,7 @@ function SREContent({ section }: { section: string }) {
           </div>
           <div className="rounded-lg bg-green-50 border border-green-100 p-3">
             <p className="text-xs font-semibold text-green-700 mb-1">Why This Stands Out</p>
-            <p className="text-[11px] text-green-600">Combines microservice architecture, real observability tooling, controlled chaos testing, reliability patterns, and evidence-based AI analysis. Significantly stronger than a typical chatbot-style project.</p>
+            <p className="text-[11px] text-green-600">Solves the hardest problems in RAG — citation accuracy, legal-aware chunking, hybrid retrieval, and audit compliance. Built from scratch without LangChain4j to maintain full pipeline observability and control. Enterprise-grade with AWS Bedrock + OpenSearch.</p>
           </div>
         </div>
       );
@@ -263,24 +253,37 @@ export function CaseStudiesSection() {
                     <div className="w-11 h-11 rounded-xl flex items-center justify-center"
                       style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.12), rgba(139,92,246,0.08))' }}>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="2" y="3" width="20" height="14" rx="2"/>
-                        <line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-                        <circle cx="8" cy="10" r="1.5" fill="#3b82f6"/><circle cx="12" cy="10" r="1.5" fill="#10b981"/><circle cx="16" cy="10" r="1.5" fill="#f59e0b"/>
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
                       </svg>
                     </div>
                   </div>
 
                   {/* Middle: Content */}
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-heading font-bold text-dark-900 text-base sm:text-lg leading-tight">
-                      Java AI SRE Sandbox
-                    </h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-heading font-bold text-dark-900 text-base sm:text-lg leading-tight">
+                        ComplianceRAG — Regulatory Q&A Pipeline
+                      </h3>
+                      <a
+                        href="https://github.com/jayanthkumarnandimandalam/compliance-rag-pipeline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-gray-50 border border-gray-200/80 text-gray-500 hover:text-blue-500 hover:border-blue-200 transition-colors text-[11px] font-medium"
+                        title="View on GitHub"
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        View on GitHub
+                      </a>
+                    </div>
                     <p className="text-xs text-gray-500 mt-1 leading-relaxed">
-                      AI-powered incident analysis platform for distributed microservices - simulates real failures and uses AI for root-cause analysis with full observability.
+                      Enterprise RAG pipeline for regulatory compliance — answers GDPR/FCA questions with verifiable citations, audit trails, and zero-hallucination tolerance. Built with hybrid search (vector + BM25) on AWS Bedrock + OpenSearch.
                     </p>
                     {/* Tech tags */}
                     <div className="flex flex-wrap gap-1.5 mt-2.5">
-                      {['Java 21', 'Spring Boot', 'Spring AI', 'Prometheus', 'Grafana', 'Docker'].map(t => (
+                      {['Java 21', 'Spring Boot', 'AWS Bedrock', 'OpenSearch', 'Titan V2', 'Claude', 'Cohere Embed 4', 'Resilience4j'].map(t => (
                         <span key={t} className="text-[9px] font-medium text-gray-500 bg-gray-50 border border-gray-200/80 px-2 py-0.5 rounded-full">{t}</span>
                       ))}
                     </div>

@@ -1,6 +1,6 @@
 import { AnimatedSection } from './AnimatedSection';
-import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion';
-import { useRef, useEffect } from 'react';
+import { motion, useInView, useMotionValue, useTransform, animate, AnimatePresence } from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
 
 const items = [
   { logo: '/btgroup.png', company: 'BT Group', period: 'Jan 2025 — Present', current: true, color: '#ff6b4a', yearLabel: '2025', darkLogo: false },
@@ -12,7 +12,7 @@ const items = [
 /* Smooth cubic bezier for premium feel */
 const smooth = [0.16, 1, 0.3, 1] as const;
 
-function DesktopTimeline() {
+function DesktopTimeline({ onCompanyClick, activeCompany }: { onCompanyClick: (i: number) => void; activeCompany: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.25 });
   const progress = useMotionValue(0);
@@ -55,17 +55,17 @@ function DesktopTimeline() {
           const baseDelay = 0.6 + i * 0.4;
 
           return (
-            <div key={i} className="flex flex-col items-center">
+            <div key={i} className="flex flex-col items-center cursor-pointer" onClick={() => onCompanyClick(i)}>
               {/* === TOP HALF === */}
               <div className="flex flex-col items-center justify-end" style={{ minHeight: 130 }}>
                 {isTop && (
                   <motion.div
                     className="flex flex-col items-center"
-                    initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
-                    animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-                    transition={{ delay: baseDelay, duration: 0.7, ease: smooth }}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ delay: baseDelay, duration: 0.6, ease: smooth }}
                   >
-                    <TimelineCard item={item} direction="above" />
+                    <TimelineCard item={item} direction="above" isActive={activeCompany === i} />
                     <motion.div
                       className="w-[2px] h-6 rounded-full"
                       style={{ background: `linear-gradient(to bottom, transparent, ${item.color})` }}
@@ -81,20 +81,12 @@ function DesktopTimeline() {
               <div className="relative z-10 flex items-center justify-center" style={{ height: 28 }}>
                 {/* Continuous pulsing rings for current company */}
                 {item.current && (
-                  <>
-                    <motion.div
-                      className="absolute rounded-full"
-                      style={{ width: 32, height: 32, border: `2px solid ${item.color}` }}
-                      animate={{ scale: [1, 2.2, 2.5], opacity: [0.5, 0.2, 0] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
-                    />
-                    <motion.div
-                      className="absolute rounded-full"
-                      style={{ width: 32, height: 32, border: `2px solid ${item.color}` }}
-                      animate={{ scale: [1, 2.2, 2.5], opacity: [0.5, 0.2, 0] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: 'easeOut', delay: 0.7 }}
-                    />
-                  </>
+                  <motion.div
+                    className="absolute rounded-full"
+                    style={{ width: 32, height: 32, border: `2px solid ${item.color}`, willChange: 'transform, opacity' }}
+                    animate={{ scale: [1, 2.2, 2.5], opacity: [0.5, 0.2, 0] }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: 'easeOut' }}
+                  />
                 )}
                 {/* One-time ripple for non-current */}
                 {!item.current && (
@@ -142,9 +134,9 @@ function DesktopTimeline() {
                 {!isTop && (
                   <motion.div
                     className="flex flex-col items-center"
-                    initial={{ opacity: 0, y: -40, filter: 'blur(8px)' }}
-                    animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-                    transition={{ delay: baseDelay, duration: 0.7, ease: smooth }}
+                    initial={{ opacity: 0, y: -30 }}
+                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ delay: baseDelay, duration: 0.6, ease: smooth }}
                   >
                     <motion.div
                       className="w-[2px] h-6 rounded-full"
@@ -153,7 +145,7 @@ function DesktopTimeline() {
                       animate={inView ? { scaleY: 1 } : {}}
                       transition={{ delay: baseDelay + 0.3, duration: 0.4, ease: smooth }}
                     />
-                    <TimelineCard item={item} direction="below" />
+                    <TimelineCard item={item} direction="below" isActive={activeCompany === i} />
                   </motion.div>
                 )}
 
@@ -166,13 +158,14 @@ function DesktopTimeline() {
   );
 }
 
-function TimelineCard({ item, direction }: { item: typeof items[number]; direction: 'above' | 'below' }) {
+function TimelineCard({ item, direction, isActive }: { item: typeof items[number]; direction: 'above' | 'below'; isActive?: boolean }) {
   return (
     <motion.div
-      className="relative rounded-xl bg-white p-3 w-full max-w-[160px] text-center overflow-hidden"
+      className={`relative rounded-xl bg-white p-3 w-full min-w-[140px] max-w-[160px] text-center overflow-hidden transition-all duration-200 ${isActive ? 'ring-2 scale-105' : ''}`}
       style={{
-        boxShadow: `0 4px 20px ${item.color}12`,
+        boxShadow: `0 4px 20px ${item.color}${isActive ? '30' : '12'}`,
         border: '1px solid rgba(0,0,0,0.04)',
+        ...(isActive ? { ringColor: item.color } : {}),
       }}
       whileHover={{
         y: direction === 'above' ? -6 : 6,
@@ -222,7 +215,7 @@ function TimelineCard({ item, direction }: { item: typeof items[number]; directi
   );
 }
 
-function MobileTimeline() {
+function MobileTimeline({ onCompanyClick, activeCompany }: { onCompanyClick: (i: number) => void; activeCompany: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.1 });
 
@@ -244,10 +237,10 @@ function MobileTimeline() {
         <motion.div
           key={i}
           className="relative mb-8 last:mb-0"
-          initial={{ opacity: 0, x: 40, filter: 'blur(6px)' }}
-          whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: i * 0.18 + 0.4, duration: 0.6, ease: smooth }}
+          transition={{ delay: i * 0.18 + 0.4, duration: 0.5, ease: smooth }}
         >
           {/* Ripple */}
           <motion.div
@@ -270,10 +263,12 @@ function MobileTimeline() {
 
           {/* Card */}
           <div
-            className="rounded-xl bg-white p-4 relative overflow-hidden"
+            onClick={() => onCompanyClick(i)}
+            className={`rounded-xl bg-white p-4 relative overflow-hidden cursor-pointer transition-all duration-200 ${activeCompany === i ? 'ring-2' : ''}`}
             style={{
               boxShadow: `0 1px 3px rgba(0,0,0,0.04), 0 4px 16px ${item.color}08`,
               border: '1px solid rgba(0,0,0,0.04)',
+              ...(activeCompany === i ? { ringColor: item.color } : {}),
             }}
           >
             <div className="absolute left-0 top-3 bottom-3 w-[3px] rounded-full" style={{ background: item.color }} />
@@ -302,7 +297,83 @@ function MobileTimeline() {
   );
 }
 
+const ROLES_DATA = [
+  {
+    company: 'BT Group',
+    color: '#ff6b4a',
+    responsibilities: [
+      'Architected and owned enterprise-grade Spring Boot microservices integrating multiple GRC processes, reducing manual governance tracking effort by 60% and improving audit traceability across enterprise workflows.',
+      'Designed and implemented a scalable Role-Based Access Control (RBAC) architecture supporting fine-grained authorization, dynamic role mapping, workflow-level access governance, audit visibility controls, and secure enterprise data segregation across multiple onboarded organizational processes.',
+      'Designed and built an AI-powered Solution Impact Assessment platform using AWS Bedrock, OpenAI-based workflows, and conversational AI, automating HLD analysis, impacted-process identification, risk scoring, approval routing, and compliance assessment workflows significantly reducing manual governance effort.',
+      'Engineered a highly configurable low-code workflow and template management platform supporting dynamic question banks, workflow builders, layout/theme customization, reusable component generation, and exportable NPM-based UI modules enabling enterprise-wide self-service process onboarding.',
+      'Developed an AI-enabled enterprise collaboration and audit platform with conversational search, threaded discussions, workflow intelligence, tool-calling architecture, and enterprise audit tracking capabilities enabling users to retrieve governance data, workflow history, compliance insights, and operational traceability using natural language interactions.',
+    ],
+  },
+  {
+    company: 'LTM',
+    color: '#3b82f6',
+    responsibilities: [
+      'Contributed to large-scale AWS cloud migration initiatives for Lincoln Financial Group (LFG) by modernizing legacy applications into scalable Spring Boot, Node.js, Lambda, and ECS-based microservices architectures.',
+      'Developed and supported critical enterprise financial systems including AFP Query Service, Fund Modelling, RIA Onboarding, SSO Services, and Annuity platforms handling high-volume business workflows and financial operations.',
+      'Improved platform reliability and engineering quality through automated testing, secure coding practices, SonarQube/Fortify compliance, and optimized database operations using DynamoDB and relational databases.',
+    ],
+  },
+  {
+    company: 'TCS',
+    color: '#8b5cf6',
+    responsibilities: [
+      'Developed and maintained enterprise banking advisory applications for Bank Yahav supporting retail banking, securities, payment systems, and financial operations across multiple banking workflows.',
+      'Implemented backend business logic, PL/SQL procedures, database optimizations, and production enhancements ensuring stable delivery of critical banking change requests and operational fixes.',
+      'Strengthened application quality and production stability through secure coding practices, SonarQube/Fortify compliance, issue resolution, and frontend enhancements.',
+    ],
+  },
+  {
+    company: 'Epikindifi',
+    color: '#10b981',
+    responsibilities: [
+      'Built and supported fintech application features involving backend APIs, database operations, and frontend integrations while gaining hands-on experience in enterprise software development and SDLC practices.',
+    ],
+  },
+];
+
+function RolesCard({ activeCompany }: { activeCompany: number }) {
+  return (
+    <div className="mt-10 sm:mt-16 max-w-[900px] mx-auto">
+      {/* Content card */}
+      <div className="rounded-2xl border border-gray-700/50 bg-dark-800/50 backdrop-blur-sm p-5 sm:p-8">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCompany}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <h3 className="text-lg font-bold text-white mb-5">{ROLES_DATA[activeCompany].company} <span className="text-xs text-gray-500 font-medium ml-2">Roles & Responsibilities</span></h3>
+            <ul className="space-y-3">
+              {ROLES_DATA[activeCompany].responsibilities.map((item, i) => (
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.06, duration: 0.3 }}
+                  className="flex items-start gap-3 text-sm text-gray-300 leading-relaxed"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-gray-500 shrink-0 mt-2" />
+                  {item}
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
 export function ExperienceSection() {
+  const [activeCompany, setActiveCompany] = useState(0);
+
   return (
     <>
       <section id="experience" className="py-16 sm:py-28 px-5 sm:px-6 bg-dark-900 overflow-hidden">
@@ -313,8 +384,12 @@ export function ExperienceSection() {
             </div>
           </AnimatedSection>
 
-          <DesktopTimeline />
-          <MobileTimeline />
+          <DesktopTimeline onCompanyClick={setActiveCompany} activeCompany={activeCompany} />
+          <MobileTimeline onCompanyClick={setActiveCompany} activeCompany={activeCompany} />
+
+          <AnimatedSection variant="fadeUp" delay={0.2}>
+            <RolesCard activeCompany={activeCompany} />
+          </AnimatedSection>
         </div>
       </section>
     </>

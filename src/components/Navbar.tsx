@@ -4,12 +4,13 @@ import { useScrollSpy } from '../hooks/useScrollSpy';
 import type { NavLink } from '../types';
 
 const NAV_LINKS: NavLink[] = [
-  { label: 'Home', sectionId: 'hero' },
   { label: 'About', sectionId: 'about' },
   { label: 'Projects', sectionId: 'skills' },
   { label: 'Case Studies', sectionId: 'projects' },
+  { label: 'Experience', sectionId: 'experience' },
+  { label: "Let's Connect", sectionId: 'contact' },
 ];
-const IDS = NAV_LINKS.map((l) => l.sectionId);
+const IDS = ['hero', ...NAV_LINKS.map((l) => l.sectionId)];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -23,16 +24,18 @@ export default function Navbar() {
   }, []);
 
   const go = useCallback((id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     setOpen(false);
+    // Small delay to let mobile menu close before scrolling
+    setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   }, []);
 
   return (
     <motion.nav
       className="fixed top-0 inset-x-0 z-50 transition-all duration-300"
       style={{
-        background: scrolled ? 'rgba(26,26,46,0.95)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        background: scrolled ? 'rgba(26,26,46,0.97)' : 'transparent',
         borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : '1px solid transparent',
       }}
       initial={{ y: -10, opacity: 0 }}
@@ -55,10 +58,15 @@ export default function Navbar() {
               {l.label}
             </button>
           ))}
-          <button onClick={() => go('contact')}
-            className="ml-4 btn-coral !py-2 !px-5 !text-[13px]">
-            <span>Let's Connect</span>
-          </button>
+          <a href="/JAYANTH_KUMAR_NANDIMANDALAM_RESUME.pdf" download
+            className="ml-4 btn-coral !py-2 !px-5 !text-[13px] inline-flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>Resume</span>
+          </a>
         </div>
 
         {/* Mobile toggle */}
@@ -93,9 +101,15 @@ export default function Navbar() {
                 </button>
               ))}
               <div className="pt-2">
-                <button onClick={() => go('contact')} className="w-full btn-coral justify-center !text-[13px]">
-                  <span>Let's Connect</span>
-                </button>
+                <a href="/JAYANTH_KUMAR_NANDIMANDALAM_RESUME.pdf" download
+                  className="w-full btn-coral justify-center !text-[13px] inline-flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  <span>Resume</span>
+                </a>
               </div>
             </div>
           </motion.div>

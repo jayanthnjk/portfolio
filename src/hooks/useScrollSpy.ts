@@ -29,7 +29,7 @@ export function useScrollSpy(sectionIds: string[]): string {
 
     observerRef.current = new IntersectionObserver(handleIntersect, {
       rootMargin: '0px 0px -60% 0px',
-      threshold: [0, 0.2, 0.4, 0.6, 0.8, 1],
+      threshold: [0, 0.25, 0.5],
     });
 
     for (const id of sectionIds) {

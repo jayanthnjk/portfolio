@@ -19,7 +19,7 @@
   --font-family-heading: 'Poppins', ui-sans-serif, system-ui, sans-serif;
 }
 
-html { scroll-behavior: smooth; overflow-x: clip; }
+html { scroll-behavior: smooth; overflow-x: clip; -webkit-overflow-scrolling: touch; }
 body {
   font-family: var(--font-family-sans);
   background: #fff;
