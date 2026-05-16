@@ -104,8 +104,18 @@ export default function ContactSection() {
             >
               <a href="mailto:jayanthnjk1327@gmail.com" className="flex items-center gap-3 text-gray-600 hover:text-dark-900 transition-colors">
                 <svg className="w-4 h-4 text-coral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
-                <span className="text-sm">jayanthnjk1327@gmail.com</span>
+                <span className="text-sm">jayanthkumarnandimandalam@gmail.com</span>
               </a>
+              <a href="tel:+919148492535" className="flex items-center gap-3 text-gray-600 hover:text-dark-900 transition-colors">
+  <svg className="w-4 h-4 text-coral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M2.25 4.5a2.25 2.25 0 012.25-2.25h1.372c.516 0 .966.351 1.091.852l1.106 4.423a1.125 1.125 0 01-.417 1.173l-1.293.97a1.125 1.125 0 00-.384 1.21 12.035 12.035 0 007.147 7.147 1.125 1.125 0 001.21-.384l.97-1.293a1.125 1.125 0 011.173-.417l4.423 1.106c.501.125.852.575.852 1.091V19.5a2.25 2.25 0 01-2.25 2.25H19.5C10.94 21.75 2.25 13.06 2.25 4.5z"
+    />
+  </svg>
+  <span className="text-sm">+91 9148492535</span>
+</a>
               <div className="flex items-center gap-3 text-gray-600">
                 <svg className="w-4 h-4 text-coral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
                 <span className="text-sm">Bengaluru, KA</span>
