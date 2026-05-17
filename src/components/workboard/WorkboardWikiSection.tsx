@@ -90,10 +90,10 @@ export function WorkboardWikiSection({ embedded = false }: { embedded?: boolean 
                   {/* Middle: Content */}
                   <div className="flex-1 min-w-0">
                     <h3 className="font-heading font-bold text-white text-base sm:text-lg leading-tight">
-                      Karnataka State Police Workboard
+                       Shift Management Workboard
                     </h3>
                     <p className="text-xs text-gray-400 mt-1 leading-relaxed">
-                      AI-powered shift management and duty roster platform for the CAR unit - managing a large-scale police workforce with intelligent scheduling, voice commands, and document intelligence.
+                      AI-powered shift management and duty roster platform for the CAR unit - managing a large-scale workforce with intelligent scheduling, voice commands, and document intelligence.
                     </p>
                     {/* Tech tags */}
                     <div className="flex flex-wrap gap-1.5 mt-2.5">
@@ -244,7 +244,7 @@ function SectionContent({ activeSection, openLightbox }: { activeSection: string
           {/* Problem Statement */}
           <div className="space-y-4">
             <p className="text-gray-300 leading-relaxed">
-              The Karnataka State Police CAR (City Armed Reserve) MT Section manages a <strong className="text-white">massive active workforce</strong> across multiple operational sections, plus personnel on training and recruit APCs. Every day, officers must be assigned to guard duties across numerous locations, VIP escorts, check posts (multiple shifts), striking force teams, court duties, cash escorts, and prison escorts - all following a strict platoon rotation cycle.
+              The Police CAR (City Armed Reserve) MT Section manages a <strong className="text-white">massive active workforce</strong> across multiple operational sections, plus personnel on training and recruit APCs. Every day, officers must be assigned to guard duties across numerous locations, VIP escorts, check posts (multiple shifts), striking force teams, court duties, cash escorts, and prison escorts - all following a strict platoon rotation cycle.
             </p>
             <ul className="space-y-2">
               {[
